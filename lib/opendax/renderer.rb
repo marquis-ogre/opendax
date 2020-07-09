@@ -20,6 +20,7 @@ module Opendax
       @config ||= config
       @utils  ||= utils
       @name ||= @config['app']['name'].downcase
+      @mailer_logo_link ||= @config['smtp']['sender_logo']
       @barong_key ||= OpenSSL::PKey::RSA.new(File.read(BARONG_KEY), '')
       @applogic_key ||= OpenSSL::PKey::RSA.new(File.read(APPLOGIC_KEY), '')
       @barong_private_key ||= Base64.urlsafe_encode64(@barong_key.to_pem)

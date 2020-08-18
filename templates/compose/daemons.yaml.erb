@@ -21,17 +21,13 @@ services:
     << : *peatio-daemon
     command: bash -c "bin/link_config && bundle exec ruby lib/daemons/daemons.rb cron_job"
 
+  deposit:
+    << : *peatio-daemon
+    command: bash -c "bin/link_config && bundle exec ruby lib/daemons/daemons.rb deposit"
+
   upstream:
     << : *peatio-daemon
     command: bash -c "bin/link_config && bundle exec ruby lib/daemons/daemons.rb upstream"
-
-  deposit_collection:
-    << : *peatio-daemon
-    command: bash -c "bin/link_config && bundle exec ruby lib/daemons/amqp_daemon.rb deposit_collection"
-
-  deposit_collection_fees:
-    << : *peatio-daemon
-    command: bash -c "bin/link_config && bundle exec ruby lib/daemons/amqp_daemon.rb deposit_collection_fees"
 
   deposit_coin_address:
     << : *peatio-daemon
@@ -49,12 +45,11 @@ services:
     << : *peatio-daemon
     command: bash -c "bin/link_config && bundle exec ruby lib/daemons/amqp_daemon.rb influx_writer"
 
-  ranger:
+  rango:
     restart: always
-    image: "<%= @config['images']['peatio'] %>"
+    image: "<%= @config['images']['rango'] %>"
     env_file:
-      - ../config/ranger.env
-    command: bash -c "bundle exec peatio service start ranger"
+      - ../config/rango.env
 
 <% unless @config['finex']['enabled'] %>
   matching:
